@@ -12,6 +12,7 @@ import download from './pics/download.png';
 import newlogo3 from './pics/newlogo3.png';
 import finale from './pics/finale.png';
 import refresh from './pics/refresh.png';
+import format from './pics/format.png';
 
 
 const codeSnippets = {
@@ -158,7 +159,7 @@ const Compiler = () => {
                             <ButtonUtility size="xs" color="tertiary" tooltip="Download" icon={DownloadCloud02} />
                             <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
                             <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} /> */}
-
+                            <button><img className='copy' src={format} /></button>&nbsp;&nbsp;&nbsp;
                             <button><img className='copy' src={copy} /></button>&nbsp;&nbsp;
                             <button><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
                             <select id="output-style" onChange={handleLanguageChange} value={selectedLanguage}>
@@ -182,6 +183,7 @@ const Compiler = () => {
                                 language={languageMap[selectedLanguage]}
                                 defaultLanguage='javascript'
                                 theme="vs-dark"
+                                options={{fontSize:16}}
                                 value={code}
                                 onChange={handleEditorChange}
                                 onMount={handleEditorDidMount}
