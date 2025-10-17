@@ -11,10 +11,11 @@ import terminal from './pics/terminal.png';
 import download from './pics/download.png';
 import newlogo3 from './pics/newlogo3.png';
 import finale from './pics/finale.png';
+import refresh from './pics/refresh.png';
 
 
 const codeSnippets = {
-    'JavaScript': `// Javascript
+    'Javascript': `// Javascript
 console.log("Hello, World!");`,
 
     'C++': `// C++
@@ -47,8 +48,17 @@ print("Hello, World!")
 
 const Compiler = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('Javascript');
-    const [code, setCode] = useState(codeSnippets['JavaScript']);
+    const [code, setCode] = useState(codeSnippets['Javascript']);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
+    const languageMap = {
+        JavaScript: 'javascript',
+        'C++': 'cpp',
+        C: 'c',
+        Java: 'java',
+        Python: 'python',
+    };
+
 
     const handleLanguageChange = (event) => {
         const newLanguage = event.target.value;
@@ -56,11 +66,15 @@ const Compiler = () => {
         setCode(codeSnippets[newLanguage]);
     };
 
+    const handleEditorChange = (value) => {
+        setCode(value);
+    }
+
     const toggleProfileMenu = () => {
         setIsProfileMenuOpen(prev => !prev);
     };
 
-    
+
 
     const handleEditorDidMount = (editor, monaco) => {
         monaco.editor.defineTheme('my-custom-theme', {
@@ -89,24 +103,22 @@ const Compiler = () => {
                     {/* <button className="button-68" type="button">Home</button>&nbsp;&nbsp; */}
 
                     {/* <button className="button-68" type="button"></button> */}
-                    <button className='button2'><img className='info' src={info} /></button>&nbsp;&nbsp;
-                    <button className='button2'><img className='setting' src={search} /></button>&nbsp;&nbsp;
                     <button className='button2'><img className='setting' src={settings} /></button>&nbsp;&nbsp;
                     <div className="profile-menu-container">
-                            <button className='button2' onClick={toggleProfileMenu} title="Profile">
-                                {/* Profile icon/placeholder */}
+                        <button className='button2' onClick={toggleProfileMenu} title="Profile">
+                            {/* Profile icon/placeholder */}
                             <img className='img1' src={profile} />
-                                
-                            </button>
-                            {isProfileMenuOpen && (
-                                <div className="profile-dropdown-menu">
-                                    <button className="dropdown-item" >Home</button>
-                                    <button className="dropdown-item" >Profile</button>
-                                    <button className="dropdown-item" >Account Settings</button>
-                                    <button className="dropdown-item logout-link" >Logout</button>
-                                </div>
-                            )}
-                        </div>
+
+                        </button>
+                        {isProfileMenuOpen && (
+                            <div className="profile-dropdown-menu">
+                                <button className="dropdown-item" >Home</button>
+                                <button className="dropdown-item" >Profile</button>
+                                <button className="dropdown-item" >Account Settings</button>
+                                <button className="dropdown-item logout-link" >Logout</button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </header>
 
@@ -147,6 +159,8 @@ const Compiler = () => {
                             <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
                             <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} /> */}
 
+                            <button><img className='copy' src={copy} /></button>&nbsp;&nbsp;
+                            <button><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
                             <select id="output-style" onChange={handleLanguageChange} value={selectedLanguage}>
                                 <option>Javascript</option>
                                 <option>C++</option>
@@ -154,7 +168,7 @@ const Compiler = () => {
                                 <option>Java</option>
                                 <option>Python</option>
                             </select>&nbsp;&nbsp;&nbsp;
-                            <button className="button-6" type="button">Debug</button>&nbsp;&nbsp;
+                            {/* <button className="button-6" type="button">Debug</button>&nbsp;&nbsp; */}
                             <button className="button-6" type="button">Run</button>
                         </div>
                     </div>
@@ -165,10 +179,11 @@ const Compiler = () => {
                                 height="100%"
                                 width="100%"
                                 // language={selectedLanguage.toLowerCase()}
+                                language={languageMap[selectedLanguage]}
                                 defaultLanguage='javascript'
                                 theme="vs-dark"
                                 value={code}
-                                // onChange={handleEditorChange}
+                                onChange={handleEditorChange}
                                 onMount={handleEditorDidMount}
                             />
 
@@ -189,10 +204,9 @@ const Compiler = () => {
                             </div>
                         </div>
                         <div className="right-toolbar1">
-                            <button><img className='delete' src={download} /></button>&nbsp;&nbsp;
-                            <button><img className='copy' src={copy} /></button>&nbsp;&nbsp;
+                            {/* <button><img className='delete' src={download} /></button>&nbsp;&nbsp; */}
                             <button><img className='delete' src={delet} /></button>&nbsp;&nbsp;
-                            <button className="button-6" type="button">Refresh</button>
+                            {/* <button className="button-6" type="button">Refresh</button> */}
                         </div>
                     </div>
                     <div className="code-editor-area">
