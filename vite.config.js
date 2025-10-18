@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  // base: "/compilein",
+  base: "/compilein",
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

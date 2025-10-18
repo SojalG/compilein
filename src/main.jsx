@@ -18,7 +18,10 @@ const router = createBrowserRouter([
   path: "/loginpage",
   element: <App2 />,
  },
-]);
+],
+{
+  basename: "/compilein"
+});
 
 
 createRoot(document.getElementById('root')).render(
