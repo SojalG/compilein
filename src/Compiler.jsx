@@ -52,6 +52,7 @@ const Compiler = () => {
     const [code, setCode] = useState(codeSnippets['Javascript']);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
+    
     const languageMap = {
         JavaScript: 'javascript',
         'C++': 'cpp',
@@ -67,14 +68,15 @@ const Compiler = () => {
         setCode(codeSnippets[newLanguage]);
     };
 
+
     const handleEditorChange = (value) => {
         setCode(value);
     }
 
+
     const toggleProfileMenu = () => {
         setIsProfileMenuOpen(prev => !prev);
     };
-
 
 
     const handleEditorDidMount = (editor, monaco) => {
@@ -91,7 +93,6 @@ const Compiler = () => {
     };
 
     return (
-
         <div className="app-container">
             <header>
                 <div className="left-header">
@@ -101,15 +102,10 @@ const Compiler = () => {
                     </span>
                 </div>
                 <div className="right-header">
-                    {/* <button className="button-68" type="button">Home</button>&nbsp;&nbsp; */}
-
-                    {/* <button className="button-68" type="button"></button> */}
-                    <button className='button2'><img className='setting' src={settings} /></button>&nbsp;&nbsp;
+                    <button className='button2' title='Settings'><img className='setting' src={settings} /></button>&nbsp;&nbsp;
                     <div className="profile-menu-container">
                         <button className='button2' onClick={toggleProfileMenu} title="Profile">
-                            {/* Profile icon/placeholder */}
                             <img className='img1' src={profile} />
-
                         </button>
                         {isProfileMenuOpen && (
                             <div className="profile-dropdown-menu">
@@ -134,15 +130,11 @@ const Compiler = () => {
                     <div className="rightheading">
                         <b>Login to view your Files</b><br /><br />
                     </div>
-                    {/* <div className="right-header1"> */}
                     <a href="/loginpage">
-                        <button className="button-2" type="button">Login</button>
+                        <button className="button-2" type="button" title='Login'>Login</button>
                     </a>
-                    {/* <a href="/style">
-                            <button className="server-button" type="button">Login</button>
-                        </a> */}
-                    {/* </div> */}
                 </section>
+
                 <section>
                     <div className="container"></div>
                 </section>
@@ -155,13 +147,9 @@ const Compiler = () => {
                             </div>
                         </div>
                         <div className="right-toolbar">
-                            {/* <ButtonUtility size="xs" color="tertiary" tooltip="Copy" icon={Copy01} />
-                            <ButtonUtility size="xs" color="tertiary" tooltip="Download" icon={DownloadCloud02} />
-                            <ButtonUtility size="xs" color="tertiary" tooltip="Delete" icon={Trash01} />
-                            <ButtonUtility size="xs" color="tertiary" tooltip="Edit" icon={Edit01} /> */}
-                            <button><img className='copy' src={format} /></button>&nbsp;&nbsp;&nbsp;
-                            <button><img className='copy' src={copy} /></button>&nbsp;&nbsp;
-                            <button><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
+                            <button title='Format Code'><img className='copy' src={format} /></button>&nbsp;&nbsp;&nbsp;
+                            <button title='Copy'><img className='copy' src={copy} /></button>&nbsp;&nbsp;
+                            <button title='Reset'><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
                             <select id="output-style" onChange={handleLanguageChange} value={selectedLanguage}>
                                 <option>Javascript</option>
                                 <option>C++</option>
@@ -169,26 +157,23 @@ const Compiler = () => {
                                 <option>Java</option>
                                 <option>Python</option>
                             </select>&nbsp;&nbsp;&nbsp;
-                            {/* <button className="button-6" type="button">Debug</button>&nbsp;&nbsp; */}
-                            <button className="button-6" type="button">Run</button>
+                            <button className="button-6" type="button" title='Run'>Run</button>
                         </div>
                     </div>
                     <div className="code-editor-area">
                         <div className="code-editor">
                             <Editor
-
                                 height="100%"
                                 width="100%"
                                 // language={selectedLanguage.toLowerCase()}
                                 language={languageMap[selectedLanguage]}
                                 defaultLanguage='javascript'
                                 theme="vs-dark"
-                                options={{fontSize:16}}
+                                options={{ fontSize: 16 }}
                                 value={code}
                                 onChange={handleEditorChange}
                                 onMount={handleEditorDidMount}
                             />
-
                         </div>
                     </div>
                 </section>
@@ -206,9 +191,7 @@ const Compiler = () => {
                             </div>
                         </div>
                         <div className="right-toolbar1">
-                            {/* <button><img className='delete' src={download} /></button>&nbsp;&nbsp; */}
-                            <button><img className='delete' src={delet} /></button>&nbsp;&nbsp;
-                            {/* <button className="button-6" type="button">Refresh</button> */}
+                            <button title='Delete'><img className='delete' src={delet} /></button>&nbsp;&nbsp;
                         </div>
                     </div>
                     <div className="code-editor-area">
