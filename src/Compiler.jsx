@@ -46,13 +46,16 @@ print("Hello, World!")
 `
 };
 
+const DUMMY_FILES = ['file1.js', 'file2.cpp', 'file3.c', 'file4.js', 'file5.py'];
+
 
 const Compiler = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('Javascript');
     const [code, setCode] = useState(codeSnippets['Javascript']);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
-    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const languageMap = {
         JavaScript: 'javascript',
         'C++': 'cpp',
@@ -92,6 +95,10 @@ const Compiler = () => {
         monaco.editor.setTheme('my-custom-theme');
     };
 
+    const handleLoginToggle = () => {
+        setIsLoggedIn(prev => !prev);
+    };
+
     return (
         <div className="app-container">
             <header>
@@ -122,17 +129,47 @@ const Compiler = () => {
             <hr className="separator" />
 
             <main>
-                <section className="right-sidebar">
-                    <br />
-                    <div className="rightheading2">
+                <section className="filesection-login"><br />
+                    <div className="filepane-heading1">
                         <b>FILES</b>
                     </div>
-                    <div className="rightheading">
-                        <b>Login to view your Files</b><br /><br />
+                    <hr style={{width: '105%', marginBottom: '10px'}}/>
+                    <div style={{ width: '100%', padding: '0 5px' }}>
+                        {isLoggedIn ? (
+                            <div style={{ marginTop: '15px' }}>
+                                <div style={{ color: '#ffffff', marginBottom: '15px', fontSize: '0.9em', fontWeight: 'bold' }}>
+                                    YOUR PROJECTS
+                                </div>
+                                {DUMMY_FILES.map((file, index) => (
+                                    <div
+                                        key={index}
+                                        className="file-item"
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#303953'}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = index === 0 ? '#303953ff' : 'transparent'}
+                                        onClick={(e) => e.currentTarget.style.backgroundColor = '#334474ff'}
+                                    >
+                                        {file}
+                                    </div>
+                                ))}
+                                <br />
+                                <button className="button-3" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="leftheading">
+                                    <b>Login to view your Files</b><br /><br />
+                                </div>
+                                {/* <a href="/compilein/loginpage"> */}
+                                <button className="button-2" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                    Login
+                                </button>
+                                {/* </a> */}
+                            </>
+                        )}
                     </div>
-                    <a href="/loginpage">
-                        <button className="button-2" type="button" title='Login'>Login</button>
-                    </a>
+
                 </section>
 
                 <section>
