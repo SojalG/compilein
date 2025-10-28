@@ -119,7 +119,9 @@ const Compiler = () => {
                                 <button className="dropdown-item" >Home</button>
                                 <button className="dropdown-item" >Profile</button>
                                 <button className="dropdown-item" >Account Settings</button>
-                                <button className="dropdown-item logout-link" >Logout</button>
+                                <button className="dropdown-item logout-link" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                    Logout
+                                </button>                            
                             </div>
                         )}
                     </div>
@@ -133,7 +135,7 @@ const Compiler = () => {
                     <div className="filepane-heading1">
                         <b>FILES</b>
                     </div>
-                    <hr style={{width: '105%', marginBottom: '10px'}}/>
+                    <hr style={{ width: '105%', marginBottom: '10px' }} />
                     <div style={{ width: '100%', padding: '0 5px' }}>
                         {isLoggedIn ? (
                             <div style={{ marginTop: '15px' }}>
@@ -152,9 +154,7 @@ const Compiler = () => {
                                     </div>
                                 ))}
                                 <br />
-                                <button className="button-3" type="button" title='Simulate Login' onClick={handleLoginToggle}>
-                                    Logout
-                                </button>
+
                             </div>
                         ) : (
                             <>
