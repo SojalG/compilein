@@ -3,16 +3,21 @@ import Editor from '@monaco-editor/react';
 import './Compilerstyle.css';
 import profile from './pics/profile.png';
 import settings from './pics/settings.png';
-import search from './pics/search.png';
-import info from './pics/info.png';
 import delet from './pics/delete.png';
 import copy from './pics/copy.png';
 import terminal from './pics/terminal.png';
-import download from './pics/download.png';
 import newlogo3 from './pics/newlogo3.png';
 import finale from './pics/finale.png';
 import refresh from './pics/refresh.png';
 import format from './pics/format.png';
+import light from './pics/light_mode.png';
+import dark from './pics/dark_mode.png';
+import ai from './pics/ai_mode.png';
+import { IoMdSend } from 'react-icons/io';
+import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { SiRobotframework } from "react-icons/si";
+import "tailwindcss";
+import { IoCloseOutline } from "react-icons/io5";
 
 
 const codeSnippets = {
@@ -55,6 +60,12 @@ const Compiler = () => {
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [istheme, setIstheme] = useState(false);
+    const [isLogout, setIsLogout] = useState(false);
+    const [isAIModeOpen, setIsAIModeOpen] = useState(false);
+    const FILE_PANEL_WIDTH = 256;
+    const AI_PANEL_WIDTH = 384;
+
 
     const languageMap = {
         JavaScript: 'javascript',
@@ -99,6 +110,24 @@ const Compiler = () => {
         setIsLoggedIn(prev => !prev);
     };
 
+    const theme = () => {
+        setIstheme(prev => !prev);
+    };
+
+    const logout = () => {
+        setIsLogout(prev => !prev);
+    };
+
+    const toggleAIMode = () => {
+        setIsAIModeOpen(prev => !prev);
+    };
+
+    const mainContentWidth = isAIModeOpen
+        ? `calc(100% - ${FILE_PANEL_WIDTH}px - ${AI_PANEL_WIDTH}px)`
+        : `calc(100% - ${FILE_PANEL_WIDTH}px)`;
+
+
+
     return (
         <div className="app-container">
             <header>
@@ -109,19 +138,35 @@ const Compiler = () => {
                     </span>
                 </div>
                 <div className="right-header">
-                    <button className='button2' title='Settings'><img className='setting' src={settings} /></button>&nbsp;&nbsp;
+                    {istheme ? (
+                        <button className='button2' title='Theme' onClick={theme}><img className='setting' src={dark} /></button>
+                    ) : (
+                        <button className='button2' title='Theme' onClick={theme}><img className='setting' src={light} /></button>
+                    )}
+                    <button
+                        title='AI Mode'
+                        onClick={toggleAIMode}
+                        className={`p-3 mb-4 transition-colors duration-200 ${isAIModeOpen ? 'text-blue-400' : 'text-white-400 hover:text-white'}`}
+                    >
+                        <SiRobotframework title='AI Mode' className='ai mt-5 cursor-pointer' />
+                    </button>
+                    {/* <button className='button2' title='Settings'><img className='setting' src={settings} /></button>&nbsp;&nbsp; */}
                     <div className="profile-menu-container">
-                        <button className='button2' onClick={toggleProfileMenu} title="Profile">
+                        <button className='button2 mt-3' onClick={toggleProfileMenu} title="Profile">
                             <img className='img1' src={profile} />
                         </button>
                         {isProfileMenuOpen && (
                             <div className="profile-dropdown-menu">
                                 <button className="dropdown-item" >Home</button>
-                                <button className="dropdown-item" >Profile</button>
-                                <button className="dropdown-item" >Account Settings</button>
-                                <button className="dropdown-item logout-link" type="button" title='Simulate Login' onClick={handleLoginToggle}>
-                                    Logout
-                                </button>                            
+                                {/* <button className="dropdown-item" >Profile</button> */}
+                                {/* <button className="dropdown-item" >Account Settings</button> */}
+                                {isLogout ? (
+                                    <button className="dropdown-item logout-link" type="button" title='Simulate Login' onClick={handleLoginToggle}>Login</button>
+                                ) : (
+                                    <button className="dropdown-item logout-link" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                        {isLoggedIn ? 'Logout' : 'Login'}
+                                    </button>
+                                )}
                             </div>
                         )}
                     </div>
@@ -130,7 +175,7 @@ const Compiler = () => {
 
             <hr className="separator" />
 
-            <main>
+            <main className="flex h-[calc(100vh-64px)] overflow-hidden">
                 <section className="filesection-login"><br />
                     <div className="filepane-heading1">
                         <b>FILES</b>
@@ -154,7 +199,6 @@ const Compiler = () => {
                                     </div>
                                 ))}
                                 <br />
-
                             </div>
                         ) : (
                             <>
@@ -162,64 +206,88 @@ const Compiler = () => {
                                     <b>Login to view your Files</b><br /><br />
                                 </div>
                                 {/* <a href="/compilein/loginpage"> */}
-                                <button className="button-2" type="button" title='Simulate Login' onClick={handleLoginToggle}>
-                                    Login
-                                </button>
+                                    <button className="button-2" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                        Login
+                                    </button>
                                 {/* </a> */}
                             </>
                         )}
                     </div>
-
                 </section>
 
                 <section>
                     <div className="container"></div>
                 </section>
 
-                <section className="main-content">
-                    <div className="toolbar">
-                        <div className="left-toolbar">
-                            <div className="file-explorer-path">
-                                <span className="path-item">Editor</span>
+                <section
+                    className="editor-section flex-grow flex flex-col bg-[#1e1e1e] transition-all duration-300 min-w-0"
+                    style={{ width: mainContentWidth }}
+                >
+                    <section className="main-content flex-grow flex flex-col h-full">
+                        <div className="toolbar flex justify-between items-center bg-[#282c34] p-2 flex-shrink-0 border-b border-gray-700">
+                            <div className="left-toolbar">
+                                <div className="file-explorer-path">
+                                    <span className="path-item">Editor</span>
+                                </div>
+                            </div>
+                            <div className="right-toolbar">
+                                <button title='Format Code'><img className='copy' src={format} /></button>&nbsp;&nbsp;&nbsp;
+                                <button title='Copy'><img className='copy' src={copy} /></button>&nbsp;&nbsp;
+                                <button title='Reset'><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
+                                <select id="output-style" onChange={handleLanguageChange} value={selectedLanguage}>
+                                    <option>Javascript</option>
+                                    <option>C++</option>
+                                    <option>C</option>
+                                    <option>Java</option>
+                                    <option>Python</option>
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <button className="button-6" type="button" title='Run'>Run</button>
                             </div>
                         </div>
-                        <div className="right-toolbar">
-                            <button title='Format Code'><img className='copy' src={format} /></button>&nbsp;&nbsp;&nbsp;
-                            <button title='Copy'><img className='copy' src={copy} /></button>&nbsp;&nbsp;
-                            <button title='Reset'><img className='copy' src={refresh} /></button>&nbsp;&nbsp;
-                            <select id="output-style" onChange={handleLanguageChange} value={selectedLanguage}>
-                                <option>Javascript</option>
-                                <option>C++</option>
-                                <option>C</option>
-                                <option>Java</option>
-                                <option>Python</option>
-                            </select>&nbsp;&nbsp;&nbsp;
-                            <button className="button-6" type="button" title='Run'>Run</button>
+                        <div className="code-editor-area flex-grow overflow-hidden">
+                            <div className="code-editor h-full w-full">
+                                <Editor
+                                    height="100%"
+                                    width="100%"
+                                    // language={selectedLanguage.toLowerCase()}
+                                    language={languageMap[selectedLanguage]}
+                                    defaultLanguage='javascript'
+                                    theme="vs-dark"
+                                    options={{ fontSize: 16 }}
+                                    value={code}
+                                    onChange={handleEditorChange}
+                                    onMount={handleEditorDidMount}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="code-editor-area">
-                        <div className="code-editor">
-                            <Editor
-                                height="100%"
-                                width="100%"
-                                // language={selectedLanguage.toLowerCase()}
-                                language={languageMap[selectedLanguage]}
-                                defaultLanguage='javascript'
-                                theme="vs-dark"
-                                options={{ fontSize: 16 }}
-                                value={code}
-                                onChange={handleEditorChange}
-                                onMount={handleEditorDidMount}
-                            />
+                    </section>
+
+                    <section>
+                        <div className="container2"></div>
+                    </section>
+
+                    <section className="main-content-terminal flex-shrink-0 h-60 flex flex-col ">
+                        <div className="toolbar-terminal h-10">
+                            <div className="left-toolbar1-terminal">
+                                <div className="file-explorer-path-terminal">
+                                    <img className='terminal' src={terminal} />&nbsp;
+                                    <span className="path-item-terminal">Terminal</span>
+                                </div>
+                            </div>
+                            <div className="right-toolbar1-terminal">
+                                {/* <button title='Delete'><img className='delete' src={delet} /></button>&nbsp;&nbsp; */}
+                                <button title='Terminal Toggle'><MdOutlineKeyboardArrowUp className='delete cursor-pointer' /></button>
+                            </div>
                         </div>
-                    </div>
+                        <div className="code-editor-area-terminal ">
+                            <div className="code-editor-terminal">
+                                <textarea className='textarea1' placeholder="Output Here..."></textarea>
+                            </div>
+                        </div>
+                    </section>
                 </section>
 
-                <section>
-                    <div className="container1"></div>
-                </section>
-
-                <section className="main-content">
+                {/* <section className="main-content">
                     <div className="toolbar">
                         <div className="left-toolbar1">
                             <div className="file-explorer-path">
@@ -236,10 +304,62 @@ const Compiler = () => {
                             <textarea placeholder="&nbsp;Output Here..."></textarea>
                         </div>
                     </div>
-                </section>
+                </section> */}
 
-                <section>
-                    <div className="container"></div>
+                {/* <section className="main-content-ai">
+                    <div className="toolbar-ai">
+                        <div className="left-toolbar-ai">
+                            <div className="file-explorer-path-ai">
+                                <SiRobotframework className='delete mt-0.5' />&nbsp;&nbsp;
+                                <span className="path-item-ai">AI-Mode</span>
+                            </div>
+                        </div>
+                        <div className="right-toolbar-ai">
+                        </div>
+                    </div>
+                    <div className="code-editor-area-ai">
+                        <div className="code-editor-ai">
+                            <div className="toolbar-ai-bar mt-165 ml-1.5 mr-1.5">
+                                <input type="text" className="input-ai" placeholder="Ask AI..." />
+                                <div className="right-toolbar-ai">
+                                    <button title='Delete'><IoMdSend title='Send' className='delete cursor-pointer' /></button>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section> */}
+
+                <section
+                    className="main-content-ai flex-shrink-0 flex flex-col bg-[#21252b] shadow-2xl z-50 transition-all duration-300 border-l border-gray-700 ml-2"
+                    style={{
+                        width: isAIModeOpen ? `${AI_PANEL_WIDTH}px` : '0px',
+                        visibility: isAIModeOpen ? 'visible' : 'hidden',
+                        minWidth: isAIModeOpen ? `${AI_PANEL_WIDTH}px` : '0px',
+                    }}
+                >
+                    <div className="toolbar-ai">
+                        <div className="left-toolbar-ai">
+                            <div className="file-explorer-path-ai flex items-center">
+                                <SiRobotframework className='delete mt-0.5 align-right' />&nbsp;&nbsp;
+                                <span className="path-item-ai text-lg font-bold">AI-Mode</span>
+                            </div>
+                            <button title='Close AI Mode' onClick={toggleAIMode} className="p-1 rounded hover:bg-gray-700 transition-colors cursor-pointer ml-55.5">
+                                <IoCloseOutline />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="code-editor-area-aix`">
+                        <div className="toolbar-ai-bar flex-shrink-0 flex mt-170 ml-1.5 mr-1.5">
+                            <input
+                                type="text"
+                                className="input-ai flex-grow bg-transparent text-white focus:outline-none placeholder-gray-500 text-sm p-1"
+                                placeholder="Ask AI..."
+                            />
+                            <button title='Send' className='ml-2 text-blue-400 hover:text-blue-300 transition-colors p-1'>
+                                <IoMdSend title='Send' className='delete cursor-pointer' />
+                            </button>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>

@@ -5,7 +5,7 @@ import {
  createBrowserRouter,
  RouterProvider,
 } from "react-router-dom";
-import App2 from './LoginPage/App2.jsx';
+import App2 from './App2.jsx';
 import App4 from './App4.jsx';
 
 
