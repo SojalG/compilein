@@ -157,7 +157,10 @@ const Compiler = () => {
                         </button>
                         {isProfileMenuOpen && (
                             <div className="profile-dropdown-menu">
-                                <button className="dropdown-item" >Home</button>
+                                <a href="/compilein/homepage">
+                                    <button className="dropdown-item" >Home</button>
+                                </a>
+
                                 {/* <button className="dropdown-item" >Profile</button> */}
                                 {/* <button className="dropdown-item" >Account Settings</button> */}
                                 {isLogout ? (
@@ -205,11 +208,11 @@ const Compiler = () => {
                                 <div className="leftheading">
                                     <b>Login to view your Files</b><br /><br />
                                 </div>
-                                {/* <a href="/compilein/loginpage"> */}
-                                    <button className="button-2" type="button" title='Simulate Login' onClick={handleLoginToggle}>
+                                <a href="/compilein/loginpage">
+                                    <button className="button-2 md:flex md:ml-[60px]" type="button" title='Simulate Login' onClick={handleLoginToggle}>
                                         Login
                                     </button>
-                                {/* </a> */}
+                                </a>
                             </>
                         )}
                     </div>
@@ -339,11 +342,11 @@ const Compiler = () => {
                 >
                     <div className="toolbar-ai">
                         <div className="left-toolbar-ai">
-                            <div className="file-explorer-path-ai flex items-center">
+                            <div className="file-explorer-path-ai flex items-center justify-between">
                                 <SiRobotframework className='delete mt-0.5 align-right' />&nbsp;&nbsp;
                                 <span className="path-item-ai text-lg font-bold">AI-Mode</span>
                             </div>
-                            <button title='Close AI Mode' onClick={toggleAIMode} className="p-1 rounded hover:bg-gray-700 transition-colors cursor-pointer ml-55.5">
+                            <button title='Close AI Mode' onClick={toggleAIMode} className="p-1 rounded hover:bg-gray-700 transition-colors cursor-pointer lg:ml-55.5">
                                 <IoCloseOutline />
                             </button>
                         </div>
@@ -365,5 +368,4 @@ const Compiler = () => {
         </div>
     );
 };
-
 export default Compiler;

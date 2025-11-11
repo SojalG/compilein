@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import App2 from './App2.jsx';
 import App4 from './App4.jsx';
+import App3 from './App3.jsx';
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   path: "/loginpage",
   element: <App2 />,
  },
+ {
+  path: "/homapage",
+  element: <App3 />,
+ }
 ],
 {
   basename: "/compilein"
